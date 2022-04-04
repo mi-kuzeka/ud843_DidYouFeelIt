@@ -16,8 +16,9 @@
 package com.example.android.didyoufeelit;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Displays the perceived strength of a single earthquake event based on responses from people who

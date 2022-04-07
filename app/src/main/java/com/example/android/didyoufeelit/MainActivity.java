@@ -15,6 +15,7 @@
  */
 package com.example.android.didyoufeelit;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -36,10 +37,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Perform the HTTP request for earthquake data and process the response.
-        Event earthquake = Utils.fetchEarthquakeData(USGS_REQUEST_URL);
+        FetchDataTask task = new FetchDataTask();
+        task.execute(USGS_REQUEST_URL);
+    }
 
-        // Update the information displayed to the user.
-        updateUi(earthquake);
+    private class FetchDataTask extends AsyncTask<String, Void, Event> {
+
+        @Override
+        protected Event doInBackground(String... urls) {
+            Event earthquake = Utils.fetchEarthquakeData(urls[0]);
+            return earthquake;
+        }
+
+        @Override
+        protected void onPostExecute(Event earthquake) {
+            if (earthquake == null) {
+                return;
+            }
+
+            updateUi(earthquake);
+        }
     }
 
     /**
